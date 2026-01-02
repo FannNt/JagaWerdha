@@ -2,6 +2,7 @@ import type { NextAuthConfig } from "next-auth";
 import { UserRole } from "@/app/generated/prisma/enums";
 
 export default {
+  trustHost: true,
   providers: [],
   callbacks: {
     async session({ session, token }) {
