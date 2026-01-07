@@ -4,23 +4,48 @@ import { motion } from "framer-motion";
 import { Heart, Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import {signIn} from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { loginScheme } from "@/lib/schemas/auth";
+import { login } from "@/actions/login";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string[]; password?: string[] }>({});
+  const [formError, setFormError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await signIn('credentials',{
-        email,
-        password,
-        redirectTo: '/'
-    })
-    setIsLoading(false);
+    setErrors({});
+    setFormError(null);
+
+    const result = loginScheme.safeParse({
+      email,
+      password
+    });
+
+    if (!result.success) {
+      setErrors(result.error.flatten().fieldErrors);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const data = await login({ email, password });
+
+      if (data?.error) {
+        setFormError(data.error);
+        setIsLoading(false);
+      }
+      // Success case handles redirect automatically
+    } catch (e) {
+      setFormError("Terjadi kesalahan. Silakan coba lagi.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -66,6 +91,11 @@ export default function LoginPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="w-full space-y-6">
+          {formError && (
+            <div className="p-3 bg-red-500/15 border border-red-500/50 rounded-lg text-red-600 text-sm">
+              {formError}
+            </div>
+          )}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,12 +106,16 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-0 py-4 bg-transparent border-b border-[#8A9A5B]/30 text-[#2F4F4F] placeholder-[#2F4F4F]/30 focus:border-[#8A9A5B] outline-none transition-all font-light text-lg"
+                className={`w-full px-0 py-4 bg-transparent border-b ${errors.email ? "border-red-500" : "border-[#8A9A5B]/30"
+                  } text-[#2F4F4F] placeholder-[#2F4F4F]/30 focus:border-[#8A9A5B] outline-none transition-all font-light text-lg`}
                 placeholder="Alamat Email"
-                required
+              // required // Removed required to let Zod handle it or keep it for HTML5 validation
               />
               <Mail className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A9A5B]/40 group-focus-within:text-[#8A9A5B] transition-colors" />
             </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs text-left mt-1">{errors.email[0]}</p>
+            )}
           </motion.div>
 
           <motion.div
@@ -94,9 +128,10 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-0 py-4 bg-transparent border-b border-[#8A9A5B]/30 text-[#2F4F4F] placeholder-[#2F4F4F]/30 focus:border-[#8A9A5B] outline-none transition-all font-light text-lg"
+                className={`w-full px-0 py-4 bg-transparent border-b ${errors.password ? "border-red-500" : "border-[#8A9A5B]/30"
+                  } text-[#2F4F4F] placeholder-[#2F4F4F]/30 focus:border-[#8A9A5B] outline-none transition-all font-light text-lg`}
                 placeholder="Kata Sandi"
-                required
+              // required
               />
               <button
                 type="button"
@@ -110,6 +145,9 @@ export default function LoginPage() {
                 )}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-xs text-left mt-1">{errors.password[0]}</p>
+            )}
           </motion.div>
 
           <motion.div
