@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/db";
 import { OnboardingType, OnboardingData, OrangTuaOnboardingData, PendampingOnboardingData } from "@/types/onboarding";
 import { RegisterUserData } from "@/types/auth";
+import {auth} from "@/auth";
 
 export const UserAuthService = {
     async createUser(data: RegisterUserData) {
@@ -19,7 +20,6 @@ export const UserAuthService = {
         });
         return user;
     },
-
     async completeOnboarding(type: OnboardingType, data: OnboardingData, userId: number) {
         if (type === OnboardingType.ORANGTUA) {
             const { usia, riwayatPenyakit, frekuensiOlahraga, sesakNapas, tujuanOlahraga, code } = data as OrangTuaOnboardingData;
@@ -64,7 +64,6 @@ export const UserAuthService = {
             return profile;
         }
     },
-
     async findParentByCode(code: string) {
         const profile = await prisma.orangTuaProfile.findUnique({
             where: { uniqueCode: code },
@@ -83,5 +82,11 @@ export const UserAuthService = {
             name: profile.user.name,
             age: profile.usia
         };
-    }
+    },
+    async checkRole(requiredRole: string) {
+        const session = await auth()
+
+        return session?.user?.role == requiredRole;
+
+    },
 }
