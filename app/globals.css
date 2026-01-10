@@ -5,6 +5,7 @@
   --sage: #2F4F4F;
   --dark-olive: #8A9A5B;
   --cream: #F2E8CF;
+  --cream-light: #F9F5F0;
   /* Softer, more muted cream */
   --dark-slate: #2F4F4F;
   --sage-light: #BCB88A;
@@ -24,6 +25,7 @@
   --color-sage: var(--sage);
   --color-dark-olive: var(--dark-olive);
   --color-cream: var(--cream);
+  --color-cream-light: var(--cream-light);
   --color-dark-slate: var(--dark-slate);
   --color-sage-light: var(--sage-light);
   --color-light-brown: var(--light-brown);

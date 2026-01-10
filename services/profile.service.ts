@@ -10,7 +10,12 @@ export const getUserProfile = async (userId: number) => {
         }, include: {
             orangTuaProfile: true,
             pendampingProfile: true,
-            pendamping: true
+            pendamping: true,
+            orangTua: {
+                include: {
+                    orangTuaProfile: true
+                }
+            }
         }
     })
 

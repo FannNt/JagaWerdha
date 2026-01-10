@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Heart, User, Home, Activity, Calendar, MessageSquare, LogIn } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const navItems = [
   { label: "Beranda", href: "/", icon: Home },
@@ -15,6 +16,7 @@ const navItems = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,17 +30,15 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 hidden md:block ${
-          scrolled ? "py-8" : "py-4"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 hidden md:block ${scrolled ? "py-8" : "py-4"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6">
           <div
-            className={`flex items-center justify-between px-8 py-4 rounded-[2rem] transition-all duration-500 border ${
-              scrolled
-                ? "bg-white/70 backdrop-blur-xl border-sage/10 shadow-lg shadow-sage/5"
-                : "bg-transparent border-transparent"
-            }`}
+            className={`flex items-center justify-between px-8 py-4 rounded-[2rem] transition-all duration-500 border ${scrolled
+              ? "bg-white/70 backdrop-blur-xl border-sage/10 shadow-lg shadow-sage/5"
+              : "bg-transparent border-transparent"
+              }`}
           >
             {/* Logo pler */}
             <Link href="/" className="flex items-center gap-3 group">
@@ -61,16 +61,26 @@ export default function Navbar() {
 
             {/* Auth Button */}
             <div className="flex items-center gap-4">
-              <Link href="/login">
-                <button className="text-sm font-bold text-dark-slate/60 hover:text-sage transition-colors px-4">
-                  Masuk
-                </button>
-              </Link>
-              <Link href="/register">
-                <button className="btn-shiny px-6 py-2.5 bg-sage text-white rounded-xl text-sm font-bold shadow-lg shadow-sage/20">
-                  Daftar
-                </button>
-              </Link>
+              {session?.user ? (
+                <Link href="/profile">
+                  <div className="w-10 h-10 ring-2 ring-[var(--cream)] rounded-full bg-sage flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-105 transition-transform cursor-pointer">
+                    <User className="w-5 h-5 text-white" />
+                  </div>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <button className="text-sm font-bold text-dark-slate/60 hover:text-sage transition-colors px-4">
+                      Masuk
+                    </button>
+                  </Link>
+                  <Link href="/register">
+                    <button className="btn-shiny px-6 py-2.5 bg-sage text-white rounded-xl text-sm font-bold shadow-lg shadow-sage/20">
+                      Daftar
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -104,8 +114,8 @@ export default function Navbar() {
             <div className="w-10 h-10 rounded-full bg-sage flex items-center justify-center shadow-lg shadow-sage/20">
               <User className="w-5 h-5 text-white" />
             </div>
-             <span className="text-[10px] font-bold text-white/40 group-hover:text-white tracking-widest uppercase">
-                  Akun
+            <span className="text-[10px] font-bold text-white/40 group-hover:text-white tracking-widest uppercase">
+              Akun
             </span>
           </Link>
         </div>

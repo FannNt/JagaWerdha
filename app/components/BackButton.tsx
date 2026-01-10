@@ -13,7 +13,7 @@ export default function BackButton({ href = "/", label = "Kembali" }: BackButton
         >
             <div className="w-10 h-10 rounded-full bg-[var(--cream)] flex items-center justify-center group-hover:bg-[var(--sage-light)] transition-colors">
                 <svg
-                    className="w-5 h-5 group-hover:w-6 group-hover:h-6 transition-all"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
