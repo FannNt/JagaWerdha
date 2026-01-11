@@ -5,6 +5,7 @@ import { Heart, User, Home, Activity, Calendar, MessageSquare, LogIn, Menu, X } 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 const navItems = [
   { label: "Beranda", href: "/lansia", icon: Home },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,14 +34,13 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 hidden md:block ${scrolled ? "py-6" : "py-8"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 hidden md:block ${scrolled ? "py-6" : "py-8"}`}
       >
         <div className="max-w-7xl mx-auto px-10">
           <div
             className={`flex items-center justify-between px-10 py-5 rounded-[2.5rem] transition-all duration-500 border ${scrolled
-                ? "bg-white/80 backdrop-blur-2xl border-sage/20 shadow-xl shadow-sage/5"
-                : "bg-white/40 backdrop-blur-md border-sage/10"
+              ? "bg-white/80 backdrop-blur-2xl border-sage/20 shadow-xl shadow-sage/5"
+              : "bg-white/40 backdrop-blur-md border-sage/10"
               }`}
           >
             {/* Logo */}
@@ -56,8 +57,8 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   className={`relative px-8 py-3 text-lg font-bold transition-all group flex items-center gap-2 ${pathname === item.href
-                      ? "text-sage"
-                      : "text-dark-slate/60 hover:text-sage"
+                    ? "text-sage"
+                    : "text-dark-slate/60 hover:text-sage"
                     }`}
                 >
                   <item.icon className="w-5 h-5" />
@@ -74,12 +75,27 @@ export default function Navbar() {
 
             {/* Auth/Profile */}
             <div className="flex items-center gap-6">
-              <Link href="/profile">
-                <button className="flex items-center gap-3 py-3 px-6 bg-sage/5 hover:bg-sage/10 rounded-2xl transition-all text-sage font-bold">
-                  <User className="w-6 h-6" />
-                  <span>Akun Saya</span>
-                </button>
-              </Link>
+              {session?.user ? (
+                <Link href="/profile">
+                  <button className="flex items-center gap-3 py-3 px-6 bg-sage/5 hover:bg-sage/10 rounded-2xl transition-all text-sage font-bold">
+                    <User className="w-6 h-6" />
+                    <span>Akun Saya</span>
+                  </button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <button className="text-sm font-bold text-dark-slate/60 hover:text-sage transition-colors px-4">
+                      Masuk
+                    </button>
+                  </Link>
+                  <Link href="/register">
+                    <button className="btn-shiny px-6 py-2.5 bg-sage text-white rounded-xl text-sm font-bold shadow-lg shadow-sage/20">
+                      Daftar
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
