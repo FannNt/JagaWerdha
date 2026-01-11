@@ -1,19 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Heart, User, Home, Activity, Calendar, MessageSquare, LogIn } from "lucide-react";
+import { Heart, User, Home, Activity, Calendar, MessageSquare, LogIn, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-  { label: "Beranda", href: "/", icon: Home },
-  { label: "Olahraga", href: "#olahraga", icon: Activity },
-  { label: "Event", href: "#event", icon: Calendar },
-  { label: "Konsultasi", href: "#konsultasi", icon: MessageSquare },
+  { label: "Beranda", href: "/lansia", icon: Home },
+  { label: "Glukosa", href: "/lansia/glukosa", icon: Activity },
+  { label: "Olahraga", href: "/lansia/olahraga", icon: Heart },
+  { label: "Konsultasi", href: "/lansia/konsultasi", icon: MessageSquare },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -24,51 +26,58 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isLansiaRoute = pathname.startsWith("/lansia");
+
   return (
     <>
       {/* Desktop Navbar */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 hidden md:block ${
-          scrolled ? "py-8" : "py-4"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 hidden md:block ${scrolled ? "py-6" : "py-8"
+          }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-10">
           <div
-            className={`flex items-center justify-between px-8 py-4 rounded-[2rem] transition-all duration-500 border ${
-              scrolled
-                ? "bg-white/70 backdrop-blur-xl border-sage/10 shadow-lg shadow-sage/5"
-                : "bg-transparent border-transparent"
-            }`}
+            className={`flex items-center justify-between px-10 py-5 rounded-[2.5rem] transition-all duration-500 border ${scrolled
+                ? "bg-white/80 backdrop-blur-2xl border-sage/20 shadow-xl shadow-sage/5"
+                : "bg-white/40 backdrop-blur-md border-sage/10"
+              }`}
           >
-            {/* Logo pler */}
+            {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <span className="text-xl font-bold text-dark-slate tracking-tight">
-                Lansat
+              <span className="text-3xl font-serif italic text-sage tracking-tighter">
+                Lansat.
               </span>
             </Link>
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
+
+            {/* Navigation items */}
+            <div className="flex items-center gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="relative px-6 py-2 text-sm font-bold text-dark-slate/60 hover:text-sage transition-colors group"
+                  className={`relative px-8 py-3 text-lg font-bold transition-all group flex items-center gap-2 ${pathname === item.href
+                      ? "text-sage"
+                      : "text-dark-slate/60 hover:text-sage"
+                    }`}
                 >
+                  <item.icon className="w-5 h-5" />
                   {item.label}
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-sage rounded-full group-hover:w-4 transition-all" />
+                  {pathname === item.href && (
+                    <motion.div
+                      layoutId="nav-active"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-sage rounded-full"
+                    />
+                  )}
                 </Link>
               ))}
             </div>
 
-            {/* Auth Button */}
-            <div className="flex items-center gap-4">
-              <Link href="/login">
-                <button className="text-sm font-bold text-dark-slate/60 hover:text-sage transition-colors px-4">
-                  Masuk
-                </button>
-              </Link>
-              <Link href="/register">
-                <button className="btn-shiny px-6 py-2.5 bg-sage text-white rounded-xl text-sm font-bold shadow-lg shadow-sage/20">
-                  Daftar
+            {/* Auth/Profile */}
+            <div className="flex items-center gap-6">
+              <Link href="/profile">
+                <button className="flex items-center gap-3 py-3 px-6 bg-sage/5 hover:bg-sage/10 rounded-2xl transition-all text-sage font-bold">
+                  <User className="w-6 h-6" />
+                  <span>Akun Saya</span>
                 </button>
               </Link>
             </div>
@@ -76,38 +85,29 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Bottom Bar */}
-      <div className="fixed bottom-6 left-6 right-6 z-50 md:hidden">
-        <div className="bg-[#2F4F4F] rounded-[2rem] p-4 flex items-center justify-around shadow-2xl shadow-black/20 border border-white/5">
+      {/* Mobile Sidebar / Bottom Navigation (Optimized for Seniors) */}
+      <div className="md:hidden">
+        {/* Simple Bottom Navigation */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-sage/10 px-4 py-4 flex justify-around items-center z-[100] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
           {navItems.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href;
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex flex-col items-center gap-1 group relative"
+                className={`flex flex-col items-center gap-2 p-3 transition-all ${isActive ? "text-sage" : "text-dark-slate/40"
+                  }`}
               >
-                <div className="p-2 rounded-xl group-hover:bg-white/10 transition-colors">
-                  <Icon className="w-6 h-6 text-white/70 group-hover:text-white" />
+                <div className={`p-4 rounded-3xl transition-all ${isActive ? "bg-sage/10 shadow-lg shadow-sage/5" : ""}`}>
+                  <Icon className="w-8 h-8" />
                 </div>
-                <span className="text-[10px] font-bold text-white/40 group-hover:text-white tracking-widest uppercase">
+                <span className={`text-xs font-black uppercase tracking-widest ${isActive ? "opacity-100" : "opacity-40"}`}>
                   {item.label}
                 </span>
-                <div className="absolute -top-1 w-1 h-1 bg-sage rounded-full opacity-0 group-hover:opacity-100" />
               </Link>
             );
           })}
-          <Link
-            href="/login"
-            className="flex flex-col items-center gap-1 group"
-          >
-            <div className="w-10 h-10 rounded-full bg-sage flex items-center justify-center shadow-lg shadow-sage/20">
-              <User className="w-5 h-5 text-white" />
-            </div>
-             <span className="text-[10px] font-bold text-white/40 group-hover:text-white tracking-widest uppercase">
-                  Akun
-            </span>
-          </Link>
         </div>
       </div>
     </>

@@ -34,6 +34,10 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  glucoseMeasurements GlucoseMeasurement[]
+  exerciseSessions    ExerciseSession[]
+  chatSessions        ChatSession[]
 }
 
 model Account {
@@ -91,6 +95,47 @@ model PendampingProfile {
   user   User @relation(fields: [userId], references: [id])
 
   usia Int
+}
+
+model GlucoseMeasurement {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  value     Float
+  unit      String   @default("mg/dL")
+  rawSignal String?  @db.Text // JSON string of PPG signal
+  createdAt DateTime @default(now())
+}
+
+model ExerciseSession {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  type      String   // e.g., "Sit-to-Stand"
+  reps      Int
+  duration  Int      // in seconds
+  intensity String?  // e.g., "Low", "Medium", "High"
+  calories  Float?
+  createdAt DateTime @default(now())
+}
+
+model ChatSession {
+  id        Int           @id @default(autoincrement())
+  userId    Int
+  user      User          @relation(fields: [userId], references: [id])
+  title     String?
+  messages  ChatMessage[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model ChatMessage {
+  id        Int         @id @default(autoincrement())
+  sessionId Int
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String      // "user" or "assistant"
+  content   String      @db.Text
+  createdAt DateTime    @default(now())
 }
 
 enum UserRole {
