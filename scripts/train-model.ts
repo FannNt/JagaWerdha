@@ -111,9 +111,18 @@ async function trainModel() {
         console.log("💾 Attempting manual save...");
 
         // Manual save logic for pure JS environment
-        const modelArtifacts = await model.save(tf.io.withSaveHandler(async (artifacts) => {
-            return artifacts;
+        let modelArtifacts: tf.io.ModelArtifacts | undefined;
+        await model.save(tf.io.withSaveHandler(async (artifacts) => {
+            modelArtifacts = artifacts;
+            return {
+                modelArtifactsInfo: {
+                    dateSaved: new Date(),
+                    modelTopologyType: 'JSON',
+                },
+            };
         }));
+
+        if (!modelArtifacts) throw new Error('Failed to capture model artifacts');
 
         // Save model.json
         fs.writeFileSync(
