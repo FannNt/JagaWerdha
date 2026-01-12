@@ -11,9 +11,10 @@ export async function analyzePpgAction(rawSignal: number[]) {
     return PpgService.analyzePpg(parseInt(session.user.id), rawSignal);
 }
 
-export async function getPpgHistoryAction() {
-    const session = await auth();
-    if (!session?.user?.id) return ResponseUtil.error("Sesi tidak valid.");
-
-    return PpgService.getHistory(parseInt(session.user.id));
-}
+// under maintenance
+// export async function getPpgHistoryAction() {
+//     const session = await auth();
+//     if (!session?.user?.id) return ResponseUtil.error("Sesi tidak valid.");
+//
+//     return PpgService.getHistory(parseInt(session.user.id));
+// }
