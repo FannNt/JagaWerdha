@@ -80,7 +80,7 @@ export default function OnboardingPendampingChat() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      handleBotResponse("Halo! Senang bertemu dengan Anda. Saya asisten pendamping Lansat untuk mempermudah Anda memantau kesehatan keluarga. 😊", 0);
+      handleBotResponse("Halo! Senang bertemu dengan Anda. Saya asisten pendamping Jaga Werdha untuk mempermudah Anda memantau kesehatan keluarga. 😊", 0);
       handleBotResponse("Sebelum kita mulai, boleh tahu berapa usia Anda?", 1000);
     }, 500);
     return () => clearTimeout(timer);

@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Send, Bot, User, Sparkles, MessageSquare, Plus, X } from "lucide-react";
-import Link from "next/link";
 import {
     startChatSessionAction,
     sendChatMessageAction,
@@ -85,7 +84,7 @@ export default function ChatConsultation() {
         <div className="min-h-screen bg-[#FDFDF5] flex flex-col h-screen overflow-hidden">
             <Navbar />
 
-            {/* Main Container - Adjusted for Navbar height */}
+            {/*  */}
             <div className="flex-1 flex flex-col pt-32 h-full">
                 {/* Elegant Minimal Header */}
                 <div className="px-10 md:px-24 mb-6 flex justify-between items-end shrink-0">
@@ -113,7 +112,7 @@ export default function ChatConsultation() {
                 >
                     {messages.length === 0 && !isTyping && (
                         <div className="h-full flex flex-col items-center justify-center text-center opacity-30">
-                            <span className="text-8xl font-serif italic text-sage mb-8">Pler.</span>
+                            <img src="/logo.svg" alt="Logo" className="h-24 w-auto mb-8" />
                             <p className="text-2xl font-light text-dark-slate max-w-sm">Tanyakan apa saja seputar kesehatan Anda hari ini.</p>
                         </div>
                     )}
@@ -188,7 +187,7 @@ export default function ChatConsultation() {
                         </button>
                     </div>
                     <p className="text-center text-[10px] text-dark-slate/20 mt-8 uppercase tracking-[0.4em] font-black">
-                        Kearifan dalam setiap jawaban • Powered by Lansat AI
+                        Kearifan dalam setiap jawaban • Powered by Jaga Werdha AI
                     </p>
                 </div>
             </div>

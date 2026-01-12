@@ -101,7 +101,7 @@ export default function OnboardingOrangTuaChat() {
   // Initial greeting
   useEffect(() => {
     const timer = setTimeout(() => {
-      handleBotResponse("Halo! Saya asisten Lansat Anda. Senang sekali bisa membantu Anda memulai perjalanan hidup sehat. 😊", 0);
+      handleBotResponse("Halo! Saya asisten Jaga Werdha Anda. Senang sekali bisa membantu Anda memulai perjalanan hidup sehat. 😊", 0);
       handleBotResponse("Sebelum kita mulai, saya ingin mengenal Anda sedikit lebih baik. Berapa usia Anda saat ini?", 1000);
     }, 500);
     return () => clearTimeout(timer);
@@ -189,7 +189,7 @@ export default function OnboardingOrangTuaChat() {
         <div className="flex items-center gap-3">
           <div>
             <h1 className="text-lg font-medium text-dark-slate">Persiapan Akun</h1>
-            <p className="text-[10px] tracking-widest text-sage font-bold uppercase">Asisten Lansat</p>
+            <p className="text-[10px] tracking-widest text-sage font-bold uppercase">Asisten Jaga Werdha</p>
           </div>
         </div>
       </div>

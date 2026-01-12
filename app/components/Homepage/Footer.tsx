@@ -14,7 +14,7 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <h2 className="text-2xl font-bold text-dark-slate tracking-tight">
-                  Lansat
+                  Jaga Werdha
                 </h2>
               </div>
               <p className="text-dark-slate/60 max-w-md leading-relaxed mb-10 text-lg font-medium">
@@ -61,7 +61,7 @@ export default function Footer() {
                <span className="text-[10px] font-bold text-[#8A784E] uppercase tracking-widest">2025</span>
              </div>
              <p className="text-sm font-medium text-dark-slate/40">
-               Lansat Indonesia • Dedikasi untuk Lansia Sehat
+               Jaga Werdha Indonesia • Dedikasi untuk Lansia Sehat
              </p>
           </div>
           <div className="flex gap-8">
