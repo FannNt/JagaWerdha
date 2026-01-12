@@ -1,8 +1,25 @@
 import React from 'react';
+// MASIH MOCKUP
 
-export default function LansiaAsuhanList({ assignedElderly = [] }) {
+interface OrangTuaProfileData {
+    usia?: number;
+    riwayatPenyakit?: string[];
+}
+
+interface OrangTua {
+    id: number;
+    name?: string | null;
+    email?: string | null;
+    orangTuaProfile?: OrangTuaProfileData | null;
+}
+
+interface LansiaAsuhanListProps {
+    assignedElderly?: OrangTua[];
+}
+
+export default function LansiaAsuhanList({ assignedElderly = [] }: LansiaAsuhanListProps) {
     // Dummy data for development - max 2 lansia
-    const dummyElderly = [
+    const dummyElderly: OrangTua[] = [
         {
             id: 1,
             name: "Siti Aminah",
@@ -64,7 +81,7 @@ export default function LansiaAsuhanList({ assignedElderly = [] }) {
                                                     {orangTua.orangTuaProfile.usia} Tahun
                                                 </span>
                                             )}
-                                            {orangTua.orangTuaProfile?.riwayatPenyakit?.length > 0 && (
+                                            {orangTua.orangTuaProfile?.riwayatPenyakit && orangTua.orangTuaProfile.riwayatPenyakit.length > 0 && (
                                                 <span className="px-2 py-0.5 bg-red-50 text-red-600 rounded-md font-medium border border-red-100">
                                                     {orangTua.orangTuaProfile.riwayatPenyakit[0]}
                                                     {orangTua.orangTuaProfile.riwayatPenyakit.length > 1 && ` +${orangTua.orangTuaProfile.riwayatPenyakit.length - 1}`}

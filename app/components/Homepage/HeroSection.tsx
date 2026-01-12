@@ -65,7 +65,7 @@ export default function HeroSection() {
             transition={{ duration: 1.2, delay: 0.4 }}
             className="text-base md:text-xl text-dark-slate/60 max-w-2xl leading-relaxed mb-12 md:mb-16 font-light"
           >
-            Lansat menghadirkan panduan yang tenang dan terukur untuk menjaga kebugaran, 
+            Jaga Werdha menghadirkan panduan yang tenang dan terukur untuk menjaga kebugaran, 
             dirancang khusus agar nyaman bagi pandangan dan mudah diikuti oleh ayah dan ibu.
           </motion.p>
 
