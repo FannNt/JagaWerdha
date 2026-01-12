@@ -2,12 +2,11 @@ import { getUserProfile } from "@/services/profile.service";
 import { auth } from "@/auth";
 import { UserRole } from "@/app/generated/prisma/enums";
 import { redirect } from "next/navigation";
-import BackButton from "@/app/components/BackButton";
+import BackButton from "@/app/components/Homepage/BackButton";
 import { logout } from "@/actions/logout";
-import PendampingProfile from "../components/PendampingProfile";
-import EventColumn from "../components/EventColumn";
-import LansiaAsuhanList from "../components/LansiaAsuhanList";
-import OrangTuaProfile from "../components/OrangTuaProfile";
+import EventColumn from "../components/Profile/EventList";
+import LansiaAsuhanList from "../components/Profile/LansiaAsuhanList";
+import OrangTuaProfile from "../components/Profile/OrangTuaProfile";
 
 
 export default async function ProfilePage() {
@@ -34,6 +33,11 @@ export default async function ProfilePage() {
     // DEV: Forced view for development
     // const isOrangTua = false;
     // const isPendamping = false;
+
+    // Redirect Pendamping to their dedicated dashboard
+    if (isPendamping) {
+        redirect("/pendamping");
+    }
 
     return (
         <div className="min-h-screen py-7 px-1 md:p-8 space-y-8">
@@ -93,7 +97,7 @@ export default async function ProfilePage() {
                     )}
 
                     {isPendamping && (
-                        <PendampingProfile profileData={profileData} />
+                        null
                     )}
                 </div>
 

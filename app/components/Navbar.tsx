@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Heart, User, Home, Activity, Calendar, MessageSquare, LogIn, Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -45,9 +46,13 @@ export default function Navbar() {
           >
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <span className="text-3xl font-serif italic text-sage tracking-tighter">
-                Lansat.
-              </span>
+              <Image 
+                src="/Logo.svg" 
+                alt="Jaga Werdha Logo" 
+                width={150} 
+                height={60} 
+                className="h-16 w-auto"
+              />
             </Link>
 
             {/* Navigation items */}

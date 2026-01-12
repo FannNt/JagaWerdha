@@ -1,6 +1,10 @@
 import React from 'react';
+// MASIHMOCKUP
+interface MonitoringStatsProps {
+    elderlyData?: any;
+}
 
-export default function MonitoringStats({ elderlyData }) {
+export default function MonitoringStats({ elderlyData }: MonitoringStatsProps) {
     // Mock data - akan diganti dengan real data dari backend nanti
     const stats = {
         latestExercise: {
@@ -21,7 +25,7 @@ export default function MonitoringStats({ elderlyData }) {
         completedScheduleCount: 1
     };
 
-    const getBloodSugarColor = (status) => {
+    const getBloodSugarColor = (status: string) => {
         switch (status) {
             case 'normal': return 'text-green-600 bg-green-50 border-green-200';
             case 'high': return 'text-red-600 bg-red-50 border-red-200';

@@ -1,9 +1,9 @@
 import Navbar from "@/app/components/Navbar";
-import HeroSection from "@/app/components/HeroSection";
-import ScanSection from "@/app/components/ScanSection";
-import EventSection from "@/app/components/EventSection";
-import ConsultationSection from "@/app/components/ConsultationSection";
-import Footer from "@/app/components/Footer";
+import HeroSection from "@/app/components/Homepage/HeroSection";
+import ScanSection from "@/app/components/Homepage/ScanSection";
+import EventSection from "@/app/components/Homepage/EventSection";
+import ConsultationSection from "@/app/components/Homepage/ConsultationSection";
+import Footer from "@/app/components/Homepage/Footer";
 
 export default function HomePage() {
     return (

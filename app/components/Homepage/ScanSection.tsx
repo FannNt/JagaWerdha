@@ -48,7 +48,7 @@ export default function ScanSection() {
                     viewport={{ once: true }}
                     className="text-base md:text-lg text-dark-slate/60 font-light leading-relaxed mb-16 max-w-2xl"
                 >
-                    AI Lansat membimbing Anda melalui panduan visual untuk mendeteksi area sensitif 
+                    AI Jaga Werdha membimbing Anda melalui panduan visual untuk mendeteksi area sensitif 
                     dan memberikan rekomendasi aktivitas yang paling aman untuk tubuh.
                 </motion.p>
 

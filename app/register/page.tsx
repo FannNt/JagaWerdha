@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Eye, EyeOff, ArrowLeft, User, UserCircle, Users } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 import { register } from "@/actions/register";
 import { signIn } from "next-auth/react";
 
@@ -65,8 +66,8 @@ export default function RegisterPage() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="mb-8"
         >
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sage to-sage/10 flex items-center justify-center shadow-2xl shadow-sage/20 mx-auto">
-            <h2 className="text-white">ganti logo ler</h2>
+          <div className="w-24 h-24 relative mx-auto drop-shadow-2xl">
+            <Image src="/Logo.svg" alt="Jaga Werdha Logo" fill className="object-contain" priority />
           </div>
         </motion.div>
 
@@ -204,7 +205,7 @@ export default function RegisterPage() {
                 Pilih <span className="font-serif italic text-[#556B2F]">Peran Anda</span>
               </h2>
               <p className="text-[#2F4F4F]/60 font-light text-sm mb-12">
-                Sesuaikan pengalaman Lansat Anda
+                Sesuaikan pengalaman Jaga Werdha Anda
               </p>
 
               <div className="grid gap-6">

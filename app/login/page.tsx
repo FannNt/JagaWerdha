@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { loginScheme } from "@/lib/schemas/auth";
 import { login } from "@/actions/login";
@@ -70,8 +71,8 @@ export default function LoginPage() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="mb-8"
         >
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8A9A5B] to-[#556B2F] flex items-center justify-center shadow-2xl shadow-[#8A9A5B]/20 mx-auto">
-            <h2 className="text-white">ganti logo ler</h2>
+          <div className="w-24 h-24 relative mx-auto drop-shadow-2xl">
+            <Image src="/Logo.svg" alt="Jaga Werdha Logo" fill className="object-contain" priority />
           </div>
         </motion.div>
 
